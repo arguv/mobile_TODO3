@@ -1,18 +1,17 @@
-$(function(){
+$(function () {
     create_new_list();
 });
 
 var i = localStorage.length;
 
-function save_todo(){
+function save_todo() {
     var todo = $("#input_title").val();
 
-    if(todo.length){
+    if (todo.length) {
 
         localStorage[i] = todo;
 
-        $("#todo_list").append('<li id="'+i+'"><a href="dialog.html" onClick="get_id(this);">'+todo+'</a></li>');
-
+        $("#todo_list").append('<li id="' + i + '"><a href="dialog.html" onClick="get_id(this);">' + todo + '</a></li>');
 
         $("#todo_list").listview();
         $("#todo_list").listview("refresh");
@@ -20,49 +19,51 @@ function save_todo(){
     }
 }
 
-function create_new_list(){
+function create_new_list() {
 
-    for (var i = 0; i < localStorage.length; i++){
+    for (var i = 0; i < localStorage.length; i++) {
 
         todo = localStorage.getItem(i);
 
-        $("#todo_list").append('<li id="'+i+'"><a href="dialog.html" onClick="get_id(this);">'+todo+'</a></li>');
+        $("#todo_list").append('<li id="' + i + '"><a href="dialog.html" onClick="get_id(this);">' + todo + '</a></li>');
     }
 
     $("#todo_list").listview();
     $("#todo_list").listview("refresh");
 }
 
-function del_todo(e){
+function del_todo(e) {
 
     //this.del = $(e).attr("id");
 
-        localStorage.removeItem(this.item);
+    localStorage.removeItem(this.item);
 
-        for(i=0; i<localStorage.length; i++) {
-            if( !localStorage.getItem(i)) {
-                localStorage.setItem(i, localStorage.getItem(i+1) );
-                localStorage.removeItem(i+1);
-            }
+    for (i = 0; i < localStorage.length; i++) {
+        if (!localStorage.getItem(i)) {
+            localStorage.setItem(i, localStorage.getItem(i + 1));
+            localStorage.removeItem(i + 1);
         }
+    }
 
-        $("#todo_list").html("");
+    $("#todo_list").html("");
 
-        create_new_list();
+    create_new_list();
 }
 
-function get_id(e){
+function get_id(e) {
 
     this.item = $(e).closest("li").attr("id");
     this.val = localStorage.getItem(this.item);
 
 }
 
-function done_todo(e){
+function done_todo(e) {
 
     this.done = $(e).attr("id");
     this.val = localStorage.getItem(this.item);
-    localStorage.setItem(this.item,'<del>'+ this.val +'</del>' );
+    if ((this.val.indexOf("<del>") == -1)) {
+        localStorage.setItem(this.item, '<del>' + this.val + '</del>');
+    }
 
     $("#todo_list").html("");
 
