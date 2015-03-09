@@ -34,8 +34,6 @@ function create_new_list() {
 
 function del_todo(e) {
 
-    //this.del = $(e).attr("id");
-
     localStorage.removeItem(this.item);
 
     for (i = 0; i < localStorage.length; i++) {
@@ -59,7 +57,6 @@ function get_id(e) {
 
 function done_todo(e) {
 
-    this.done = $(e).attr("id");
     this.val = localStorage.getItem(this.item);
     if ((this.val.indexOf("<del>") == -1)) {
         localStorage.setItem(this.item, '<del>' + this.val + '</del>');
